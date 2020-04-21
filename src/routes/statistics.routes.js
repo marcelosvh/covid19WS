@@ -13,9 +13,9 @@ let sql = `CALL PROY_APP_COVID19_LISTAR_CASOS_DIARIOS(?)`;
 
 router.get("/statistics", (req, res) => {
     
-    const fecha = "07/03/2020"
+    const fecha = req.body.fecha;
 
-    connection.query('CALL PROY_APP_COVID19_LISTAR_CASOS_DIARIOS(?)', fecha, (error, rows, fields) => {
+    connection.query('CALL PROY_APP_COVID19_LISTAR_CASOS_DIARIOS(?)', fecha, function (error, rows, fields) {
         if (!error) {
             const result = rows[0]
             res.json(result);
@@ -24,6 +24,19 @@ router.get("/statistics", (req, res) => {
         }
         
     });
+    // connection.query({
+    //     sql: 'CALL PROY_APP_COVID19_LISTAR_CASOS_DIARIOS(?)',
+    //     timeout: 40000, // 40s
+    //     values: ['06/03/2020']
+    //   }, function (error, rows, fields) {
+    //     if (!error) {
+    //         const result = rows[0]
+    //         res.json(result);
+    //     } else {
+    //         console.log(`Error en statistics: ${error.message}`);
+    //     }
+        
+    // });
 });
 
 
